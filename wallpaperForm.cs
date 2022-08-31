@@ -112,7 +112,6 @@ namespace Wallpaper_Tools
                     throw new ArgumentOutOfRangeException(nameof(this.wallpaperStyle.SelectedItem),
                         this.wallpaperStyle.SelectedItem, "That's not an option.");
             }
-            MessageBox.Show("Successfully set wallpaper!", "Success!");
             Cursor.Current = Cursors.Default;
         }
 
@@ -125,13 +124,11 @@ namespace Wallpaper_Tools
             dialog.CheckFileExists = true;
             dialog.CheckPathExists = true;
             dialog.Multiselect = false;
-            if (dialog.ShowDialog() == DialogResult.OK)
-            {
-                _imagePath = dialog.FileName;
-                int idx = _imagePath.LastIndexOf(@"\", StringComparison.Ordinal);
-                if (idx != -1) _imageName = _imagePath[(idx + 1)..];
-                fileLabel.Text = _imageName;
-            }
+            if (dialog.ShowDialog() != DialogResult.OK) return;
+            _imagePath = dialog.FileName;
+            int idx = _imagePath.LastIndexOf(@"\", StringComparison.Ordinal);
+            if (idx != -1) _imageName = _imagePath[(idx + 1)..];
+            fileLabel.Text = _imageName;
         }
     }
 }
